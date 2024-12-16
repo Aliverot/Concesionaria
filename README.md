@@ -1055,6 +1055,13 @@ public DefaultTableModel obtenerUsuariosModelo(Connection conn) {
 ![image](https://github.com/user-attachments/assets/c633cbbf-a491-413b-952d-5f9793fa2ae9)
 # Login
 ![image](https://github.com/user-attachments/assets/4c26a2cb-a310-431e-a461-b08e6901ac20)
+# Uso de componente usado en clase
+![image](https://github.com/user-attachments/assets/8bf2f87e-6d34-4349-a8de-3cf42fd7f317)
+# Compra de vehiculo
+![image](https://github.com/user-attachments/assets/6e7a87f5-c43d-46ca-adab-22413e2c91dd)
+
+![image](https://github.com/user-attachments/assets/c0d2b255-43db-48ea-8410-c176d206783f)
+
 ### **Video**
 
 https://github.com/user-attachments/assets/5e736d01-2d49-4b64-b22e-d67fa1668209
