@@ -875,6 +875,180 @@ public class UsuarioActivoRenderer extends DefaultTableCellRenderer {
    - Se preserva el comportamiento de selección y enfoque cuando la fila está activa, asegurando que la celda destaque según la interacción del usuario.
 
 ---
+### **Explicación del código**
+
+Este código pertenece a una clase `UsuarioDAO` que interactúa con la base de datos para obtener información de usuarios (administradores y empleados). Tiene dos métodos principales que generan modelos de tabla (`DefaultTableModel`) para mostrar usuarios en una interfaz gráfica, con características como priorizar al usuario activo o listar todos los usuarios.
+
+---
+
+### **Método 1: `obtenerUsuariosConActivoPrimero`**
+
+#### **Descripción**
+
+Este método genera un modelo de tabla donde los usuarios se muestran en este orden:
+1. **El usuario actualmente activo (según la sesión) se lista primero.**
+2. **Los demás usuarios se añaden después.**
+
+#### **Funcionamiento**
+1. **Consulta SQL combinada con `UNION ALL`:**
+   - Se consulta la tabla de `administrador` y `empleados` para obtener todos los usuarios, asignando un rol ('Administrador' o 'Empleado').
+
+   ```sql
+   SELECT nombre, apellido, correo, telefono, nombre_usuario, 'Administrador' AS tipo FROM administrador
+   UNION ALL
+   SELECT nombre, apellido, correo, telefono, nombre_usuario, 'Empleado' AS tipo FROM empleados
+   ```
+
+2. **Identificación del usuario activo:**
+   - Se utiliza `Sesion.getUsuario()` para obtener el nombre del usuario activo.
+
+3. **Ordenamiento de los usuarios:**
+   - Se recorre el `ResultSet` para separar al usuario activo de los demás.
+   - El usuario activo se añade primero al modelo de la tabla (`DefaultTableModel`).
+   - Los demás usuarios se almacenan temporalmente en una lista (`usuarios`) y luego se añaden al modelo.
+
+4. **Propiedad de celdas no editables:**
+   - Se sobrescribe `isCellEditable` para que ninguna celda de la tabla sea editable.
+
+#### **Código del método**
+
+```java
+public DefaultTableModel obtenerUsuariosConActivoPrimero() {
+    String usuarioActivo = Sesion.getUsuario();
+
+    // Consulta para obtener usuarios de ambas tablas con su rol
+    String sql = "SELECT nombre, apellido, correo, telefono, nombre_usuario, 'Administrador' AS tipo FROM administrador "
+               + "UNION ALL "
+               + "SELECT nombre, apellido, correo, telefono, nombre_usuario, 'Empleado' AS tipo FROM empleados";
+
+    // Modelo de tabla con encabezados
+    DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nombre", "Apellido", "Correo", "Teléfono", "Usuario", "Tipo"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Celdas no editables
+        }
+    };
+
+    // Lista para usuarios no activos
+    List<Object[]> usuarios = new ArrayList<>();
+
+    try (Connection conn = ConexionBD.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            String nombre = rs.getString("nombre");
+            String apellido = rs.getString("apellido");
+            String correo = rs.getString("correo");
+            String telefono = rs.getString("telefono");
+            String nombreUsuario = rs.getString("nombre_usuario");
+            String tipo = rs.getString("tipo");
+
+            // Filas para el modelo
+            Object[] fila = new Object[]{nombre, apellido, correo, telefono, nombreUsuario, tipo};
+
+            // Priorizar al usuario activo
+            if (nombreUsuario.equals(usuarioActivo)) {
+                modelo.addRow(fila); // Añadir al inicio
+            } else {
+                usuarios.add(fila); // Añadir a la lista temporal
+            }
+        }
+
+        // Agregar usuarios no activos
+        for (Object[] usuario : usuarios) {
+            modelo.addRow(usuario);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return modelo;
+}
+```
+
+---
+
+### **Método 2: `obtenerUsuariosModelo`**
+
+#### **Descripción**
+
+Este método es más simple: genera un modelo de tabla con todos los usuarios (administradores y empleados) sin priorizar a ninguno.
+
+#### **Funcionamiento**
+1. **Consulta SQL combinada:**
+   - Al igual que en el primer método, se usa una consulta con `UNION ALL` para obtener los usuarios de ambas tablas junto con su rol.
+
+   ```sql
+   SELECT nombre, apellido, correo, telefono, nombre_usuario, 'administrador' AS rol FROM administrador
+   UNION ALL
+   SELECT nombre, apellido, correo, telefono, nombre_usuario, 'empleado' AS rol FROM empleados
+   ```
+
+2. **Modelo de tabla:**
+   - Se crea un modelo de tabla con encabezados: Nombre, Apellido, Correo, Teléfono, Usuario, Rol.
+
+3. **Población del modelo:**
+   - Se recorre el `ResultSet` y se añaden todas las filas directamente al modelo sin priorizar.
+
+4. **Propiedad de celdas no editables:**
+   - Se sobrescribe `isCellEditable` para que las celdas no sean editables.
+
+#### **Código del método**
+
+```java
+public DefaultTableModel obtenerUsuariosModelo(Connection conn) {
+    // Modelo de tabla con encabezados
+    DefaultTableModel modelo = new DefaultTableModel(new String[]{"Nombre", "Apellido", "Correo", "Teléfono", "Usuario", "Rol"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Celdas no editables
+        }
+    };
+
+    // Consulta SQL para obtener usuarios y sus roles
+    String sql = "SELECT nombre, apellido, correo, telefono, nombre_usuario, 'administrador' AS rol FROM administrador "
+               + "UNION ALL "
+               + "SELECT nombre, apellido, correo, telefono, nombre_usuario, 'empleado' AS rol FROM empleados";
+
+    try (PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            String nombre = rs.getString("nombre");
+            String apellido = rs.getString("apellido");
+            String correo = rs.getString("correo");
+            String telefono = rs.getString("telefono");
+            String usuario = rs.getString("nombre_usuario");
+            String rol = rs.getString("rol");
+
+            // Añadir fila al modelo
+            modelo.addRow(new Object[]{nombre, apellido, correo, telefono, usuario, rol});
+        }
+
+        return modelo;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null; // Devuelve null en caso de error
+    }
+}
+```
+
+---
+
+### **Diferencias entre los métodos**
+
+| Característica                             | `obtenerUsuariosConActivoPrimero`       | `obtenerUsuariosModelo`          |
+|-------------------------------------------|-----------------------------------------|----------------------------------|
+| **Prioridad al usuario activo**           | Sí                                      | No                               |
+| **Propósito principal**                   | Mostrar usuarios destacando al activo  | Listar todos los usuarios       |
+| **Parámetros necesarios**                 | Ninguno                                 | Conexión a la base de datos (`conn`) |
+| **Estructura de datos temporal**          | Usa una lista (`List<Object[]>`)        | No usa estructuras temporales    |
+
+---
+
 
 
 
