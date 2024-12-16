@@ -1049,7 +1049,12 @@ public DefaultTableModel obtenerUsuariosModelo(Connection conn) {
 
 ---
 
-
+# Ventana de inicio
+![image](https://github.com/user-attachments/assets/15b92a2d-d129-4c80-80d5-7e2ce4b82f3c)
+# Catalogo
+![image](https://github.com/user-attachments/assets/c633cbbf-a491-413b-952d-5f9793fa2ae9)
+# Login
+![image](https://github.com/user-attachments/assets/4c26a2cb-a310-431e-a461-b08e6901ac20)
 
 
 
