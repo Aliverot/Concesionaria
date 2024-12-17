@@ -1062,21 +1062,21 @@ public DefaultTableModel obtenerUsuariosModelo(Connection conn) {
 ![image](https://github.com/user-attachments/assets/381e3778-6630-47de-8228-9822aa7d4b50)
 
 # Catalogo
--Se muestran todos los registros de coches que tengan un stock mayor a 0 con ciertas caracteristicas en un Jtable y tiene filtros de busqueda para encontrar el coche deseado con mayor facilidad, tambien al presionar alguna de las filas, se sera redireccionado a una ventana con mas detalles de ese coche.
+- Se muestran todos los registros de coches que tengan un stock mayor a 0 con ciertas caracteristicas en un Jtable y tiene filtros de busqueda para encontrar el coche deseado con mayor facilidad, tambien al presionar alguna de las filas, se sera redireccionado a una ventana con mas detalles de ese coche.
 ![image](https://github.com/user-attachments/assets/c633cbbf-a491-413b-952d-5f9793fa2ae9)
 ![image](https://github.com/user-attachments/assets/c87adbbd-07c9-4e26-84fd-c2b1f390e085)
 # Compra de vehiculo
--En este formulario se ingresan los datos de la persona que va a comprar y una vez que se da aceptar, toma el valor puesto en el correo electronico y manda un pdf con los datos de la persona y el coche seleccionado al correo dado.
+- En este formulario se ingresan los datos de la persona que va a comprar y una vez que se da aceptar, toma el valor puesto en el correo electronico y manda un pdf con los datos de la persona y el coche seleccionado al correo dado.
 ![image](https://github.com/user-attachments/assets/c0d2b255-43db-48ea-8410-c176d206783f)
 # Uso de componente usado en clase
--Se usa el componente creado en clase para una pequeña ventana de contacto, este componente es un textArea con una funcionalidad que al seleccionar el texto deseado sale un boton emergente que tiene la fuincionalidad de copiar en el portapapeles.
+- Se usa el componente creado en clase para una pequeña ventana de contacto, este componente es un textArea con una funcionalidad que al seleccionar el texto deseado sale un boton emergente que tiene la fuincionalidad de copiar en el portapapeles.
 ![image](https://github.com/user-attachments/assets/8bf2f87e-6d34-4349-a8de-3cf42fd7f317)
 # Busqueda
--Abre una ventana donde se puede buscar el coche por nombre con una busqueda en tiempo real, y tambien a presionar el vehiculo abre la ventana con sus detalles.
+- Abre una ventana donde se puede buscar el coche por nombre con una busqueda en tiempo real, y tambien a presionar el vehiculo abre la ventana con sus detalles.
 ![image](https://github.com/user-attachments/assets/bd3f8a2c-cda9-42a2-9e8c-4e4d8c40b10c)
 ![image](https://github.com/user-attachments/assets/47df3b37-a6e3-4325-bb8b-ab0ab9a9274a)
 # Login
--Ventana de login que redirecciona a la vista del usuario ingresado (Empleado o administrador).
+- Ventana de login que redirecciona a la vista del usuario ingresado (Empleado o administrador).
 ![image](https://github.com/user-attachments/assets/4c26a2cb-a310-431e-a461-b08e6901ac20)
 # Inicio de Admin y Empleado
 - Se muestra lo mismo que en el inicio normal con la diferencia que aqui se pueden cambiar las imagenes, los textos y las categorias a las cuales va a redirigir el boton, eso se aplicara al dar en actualizar.
