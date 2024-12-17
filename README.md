@@ -63,6 +63,13 @@ Este proyecto es un **Sistema de Gestión de Concesionaria de Autos** desarrolla
    - Visualiza el catálogo de autos con detalles completos.
    - Solicita cotizaciones con base en los autos de interés.
   
+## Requisitos 
+- Este proyecto usa postgreSQL en su version 9.4 la dependencia ya esta cargada dentro del proyecto pero esta verion es recomendable tener para evitar posibles errores.
+- Se requiere crear un usuario administrador previamente en la base de datos para poder acceder a las funcionalidades del proyecto.
+  ![image](https://github.com/user-attachments/assets/23c141dd-ea2b-4161-ae14-72c456bfa777)
+-En la clase Conexion cambia segun tu base de datos
+  ![image](https://github.com/user-attachments/assets/f152e4b4-4bdb-4fac-966e-d79607125831)
+
 ## Explicación de la Clase `Conexion`
 
 La clase `Conexion` contiene el método `validarUsuario`, que se encarga de verificar si un usuario existe en la base de datos PostgreSQL y validar sus credenciales. Si el usuario es encontrado, se obtiene su rol y se valida la contraseña. Si la contraseña es correcta, se devuelve el rol del usuario. En caso contrario, se devuelve `null`.
@@ -1050,17 +1057,49 @@ public DefaultTableModel obtenerUsuariosModelo(Connection conn) {
 ---
 
 # Ventana de inicio
+- En esta ventana simplemente se pueden apreciar imagenes y 3 botones en la parte inferior, estos botones rediriguen a la clase catalogo y aplican el flitro de la categoria que se tiene guardado.
 ![image](https://github.com/user-attachments/assets/15b92a2d-d129-4c80-80d5-7e2ce4b82f3c)
-# Catalogo
-![image](https://github.com/user-attachments/assets/c633cbbf-a491-413b-952d-5f9793fa2ae9)
-# Login
-![image](https://github.com/user-attachments/assets/4c26a2cb-a310-431e-a461-b08e6901ac20)
-# Uso de componente usado en clase
-![image](https://github.com/user-attachments/assets/8bf2f87e-6d34-4349-a8de-3cf42fd7f317)
-# Compra de vehiculo
-![image](https://github.com/user-attachments/assets/6e7a87f5-c43d-46ca-adab-22413e2c91dd)
+![image](https://github.com/user-attachments/assets/381e3778-6630-47de-8228-9822aa7d4b50)
 
+# Catalogo
+-Se muestran todos los registros de coches que tengan un stock mayor a 0 con ciertas caracteristicas en un Jtable y tiene filtros de busqueda para encontrar el coche deseado con mayor facilidad, tambien al presionar alguna de las filas, se sera redireccionado a una ventana con mas detalles de ese coche.
+![image](https://github.com/user-attachments/assets/c633cbbf-a491-413b-952d-5f9793fa2ae9)
+![image](https://github.com/user-attachments/assets/c87adbbd-07c9-4e26-84fd-c2b1f390e085)
+# Compra de vehiculo
+-En este formulario se ingresan los datos de la persona que va a comprar y una vez que se da aceptar, toma el valor puesto en el correo electronico y manda un pdf con los datos de la persona y el coche seleccionado al correo dado.
 ![image](https://github.com/user-attachments/assets/c0d2b255-43db-48ea-8410-c176d206783f)
+# Uso de componente usado en clase
+-Se usa el componente creado en clase para una pequeña ventana de contacto, este componente es un textArea con una funcionalidad que al seleccionar el texto deseado sale un boton emergente que tiene la fuincionalidad de copiar en el portapapeles.
+![image](https://github.com/user-attachments/assets/8bf2f87e-6d34-4349-a8de-3cf42fd7f317)
+# Busqueda
+-Abre una ventana donde se puede buscar el coche por nombre con una busqueda en tiempo real, y tambien a presionar el vehiculo abre la ventana con sus detalles.
+![image](https://github.com/user-attachments/assets/bd3f8a2c-cda9-42a2-9e8c-4e4d8c40b10c)
+![image](https://github.com/user-attachments/assets/47df3b37-a6e3-4325-bb8b-ab0ab9a9274a)
+# Login
+-Ventana de login que redirecciona a la vista del usuario ingresado (Empleado o administrador).
+![image](https://github.com/user-attachments/assets/4c26a2cb-a310-431e-a461-b08e6901ac20)
+# Inicio de Admin y Empleado
+- Se muestra lo mismo que en el inicio normal con la diferencia que aqui se pueden cambiar las imagenes, los textos y las categorias a las cuales va a redirigir el boton, eso se aplicara al dar en actualizar.
+![image](https://github.com/user-attachments/assets/c4f94c6a-fad9-4b7c-a4a3-2868009e4030)
+# Catalogo Admin y Empleado
+- En lo que se diferencia con el Catalogo normal es que aqui se pueden ver coches con stock de 0 y tambien hay un boton para agregar nuevos coches.
+![image](https://github.com/user-attachments/assets/6d765750-11e6-4a0e-a9ff-3aa38443ce9a)
+# Detalle del coche para admnin y empleados
+- En estas vistas se pueden editar los campos de caracteristicas, el nombre, stock, descripcio y la imagen del coche lo cual se vera reflejado en los detalles del usuario normal.
+![image](https://github.com/user-attachments/assets/02f3651b-1e11-43e8-bd70-07cf530d815e)
+# Ventas
+-En esta ventana se veran todas las ventas realizadas, quien las realizo y el coche que fue comprado, tiene filtros para la busqueda de las ventas lables para ver el total de ventas e ingresos que se tienen y un boton que genera un reporte de la venta seleccionada.
+![image](https://github.com/user-attachments/assets/10bf2fc3-39df-4333-aa8d-d8f0f4a6c2cf)
+# Usuaris (Solo Admin)
+- Este boton manda a dos posibles opciones, o agregar o administrar usuarios.
+![image](https://github.com/user-attachments/assets/9291c27a-e2e6-4e94-bc66-c1d0fc7fe911)
+- En agregar se ingresa la informacion personal del nuevo usuario asi como sus credenciales de acceso y su respectivo rol y una vez creado se guarda y esa persona puede acceder al proyecto ingresando sus credenciales en el login.
+![image](https://github.com/user-attachments/assets/ce53f4db-6e3c-4969-a41b-e03307704df0)
+![image](https://github.com/user-attachments/assets/5a046f73-628a-4488-a610-c939d16b1fcd)
+- En administrar se carga una tabla con todos los usuarios creados actualmente, y si se selecciona alguno se cargan los datos de esa persona en los textField que se tienen en la parte izquierda, aqui se pueden modificar los datos de esa persona y actualizarlos con el boton actalizar, y si se seleciona un persona y se da eliminar esta sera eliminada de la base de datos, tanto sus datos como su usuario, tambien en la tabla el primer resultado que se muestra es el usuario que actualmente esta activo, este no puede modificarse ni eliminarse asi mismo.
+![image](https://github.com/user-attachments/assets/0a27ba18-3aef-4849-8260-bc4bf4fab2ef)
+
+---
 
 ### **Video**
 
